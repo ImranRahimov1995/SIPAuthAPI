@@ -78,7 +78,7 @@ http://127.0.0.1:8000/api/users/info      [PUT] OnlyWithBearerToken
 
 #### NOTE: I was deployed this app in prod .  domain is api
 
-(https://apitest.gopy.space/)
+(https://testapi.gopy.space/)
 
 ## [Docs]
 
