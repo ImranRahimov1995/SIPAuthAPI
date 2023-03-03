@@ -3,10 +3,40 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework.permissions import AllowAny
+
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
 from apps.users.apis import LatencyAPIView
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="AUTH API",
+        default_version='v1',
+        description="Test api for SIP",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="mr.rahimov.imran@gmail.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[AllowAny],
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Docs Swagger
+    path(
+        'api/docs/',
+        schema_view.with_ui('swagger', cache_timeout=0),
+        name='schema-swagger-ui',
+    ),
+    path(
+        'api/docs/redoc/',
+        schema_view.with_ui('redoc', cache_timeout=0),
+        name='schema-redoc',
+    ),
+    # APIS
     path('api/latency', LatencyAPIView.as_view(), name='latency'),
     path('api/auth/', include('apps.custom_auth.urls')),
     path('api/users/', include('apps.users.urls')),
